@@ -97,7 +97,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 	{ MODKEY,                       XK_z,      spawn,          {.v = slockcmd } },
-	{ MODKEY,                       XK_f,      spawn,          {.v = firefoxcmd } },
+	{ MODKEY,                       XK_x,      spawn,          {.v = firefoxcmd } },
 };
 
 /* button definitions */
