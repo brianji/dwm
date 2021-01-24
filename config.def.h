@@ -60,7 +60,7 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont,
 static const char *termcmd[]  = { "st", NULL };
 static const char *slockcmd[]  = { "slock", NULL };
 static const char *firefoxcmd[]  = { "firefox", NULL };
-static const char *powercmd[] = { "/home/brian/bin/power.sh", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, "-h", "32", NULL };
+static const char *powercmd[] = { "power.sh", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, "-h", "32", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
