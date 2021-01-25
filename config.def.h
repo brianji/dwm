@@ -11,12 +11,13 @@ static const char dmenufont[]       = "JetBrains Mono:size=10";
 static const char col_gray1[]       = "#2e3440";
 static const char col_gray2[]       = "#3b4252";
 static const char col_gray3[]       = "#d8dee9";
-static const char col_gray4[]       = "#e5e9f0";
-static const char col_cyan[]        = "#5e81ac";
+static const char col_blue[]        = "#5e81ac";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
+	[SchemeSel]  = { col_blue, col_gray1,  col_blue },
+	[SchemeBorder] = { col_gray2, col_gray1, col_gray1 },
+	[SchemeBackground] = { col_gray1, col_gray1, col_gray1 },
 };
 
 /* tagging */
@@ -56,11 +57,11 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, "-h", "32", NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_gray1, "-sf", col_blue, "-h", "32", NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *slockcmd[]  = { "slock", NULL };
 static const char *firefoxcmd[]  = { "firefox", NULL };
-static const char *powercmd[] = { "power.sh", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, "-h", "32", NULL };
+static const char *powercmd[] = { "power.sh", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_gray1, "-sf", col_blue, "-h", "32", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */

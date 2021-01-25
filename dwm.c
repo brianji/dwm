@@ -59,7 +59,7 @@
 
 /* enums */
 enum { CurNormal, CurResize, CurMove, CurLast }; /* cursor */
-enum { SchemeNorm, SchemeSel }; /* color schemes */
+enum { SchemeNorm, SchemeSel, SchemeBorder, SchemeBackground }; /* color schemes */
 enum { NetSupported, NetWMName, NetWMState, NetWMCheck,
        NetWMFullscreen, NetActiveWindow, NetWMWindowType,
        NetWMWindowTypeDialog, NetClientList, NetLast }; /* EWMH atoms */
@@ -697,8 +697,6 @@ void
 drawbar(Monitor *m)
 {
 	int x, w, tw = 0;
-	int boxs = drw->fonts->h / 9;
-	int boxw = drw->fonts->h / 6 + 2;
 	unsigned int i, occ = 0, urg = 0;
 	Client *c;
 
@@ -714,30 +712,39 @@ drawbar(Monitor *m)
 		if (c->isurgent)
 			urg |= c->tags;
 	}
+
+	drw_setscheme(drw, scheme[SchemeBackground]);
+	drw_rect(drw, 0, 0, m->ww, 2, 1, 0);
+	drw_setscheme(drw, scheme[SchemeBorder]);
+	drw_rect(drw, 0, 30, m->ww, 2, 1, 0);
+
 	x = 0;
 	for (i = 0; i < LENGTH(tags); i++) {
 		w = 32;
 		drw_setscheme(drw, scheme[m->tagset[m->seltags] & 1 << i ? SchemeSel : SchemeNorm]);
-		drw_text(drw, x, 0, w, bh, (w - drw_fontset_getwidth(drw, tags[i])) / 2, tags[i], urg & 1 << i);
-		if (occ & 1 << i)
-			drw_rect(drw, x + boxs, boxs, boxw, boxw,
-				m == selmon && selmon->sel && selmon->sel->tags & 1 << i,
-				urg & 1 << i);
+		drw_text(drw, x, 2, w, 28, (w - drw_fontset_getwidth(drw, tags[i])) / 2, tags[i], urg & 1 << i);
+		if (occ & 1 << i) {
+			drw_setscheme(drw, scheme[SchemeSel]);
+			drw_rect(drw, x, 0, 32, 2, 1, urg & 1 << i);
+		}
+		if (m->tagset[m->seltags] & 1 << i) {
+			drw_setscheme(drw, scheme[SchemeSel]);
+			drw_rect(drw, x, 30, 32, 2, 1, urg & 1 << i);
+		}
 		x += w;
 	}
 	w = blw = TEXTW(m->ltsymbol);
 	drw_setscheme(drw, scheme[SchemeNorm]);
-	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
+	x = drw_text(drw, x, 2, w, 28, lrpad / 2, m->ltsymbol, 0);
 
 	if ((w = m->ww - tw - x) > bh) {
-		if (m->sel) {
-			drw_setscheme(drw, scheme[m == selmon ? SchemeSel : SchemeNorm]);
-			drw_text(drw, x, 0, w, bh, lrpad / 2, m->sel->name, 0);
-			if (m->sel->isfloating)
-				drw_rect(drw, x + boxs, boxs, boxw, boxw, m->sel->isfixed, 0);
-		} else {
-			drw_setscheme(drw, scheme[SchemeNorm]);
-			drw_rect(drw, x, 0, w, bh, 1, 1);
+		drw_setscheme(drw, scheme[SchemeNorm]);
+		drw_rect(drw, x, 2, w, 28, 1, 1);
+		if (m->sel && m == selmon) {
+			w = TEXTW(m->sel->name);
+			drw_setscheme(drw, scheme[SchemeSel]);
+			drw_text(drw, x, 2, w, 28, lrpad / 2, m->sel->name, 0);
+			drw_rect(drw, x, 30, w, 2, 1, 0);
 		}
 	}
 	drw_map(drw, m->barwin, 0, 0, m->ww, bh);
