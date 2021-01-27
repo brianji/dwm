@@ -417,7 +417,7 @@ attachstack(Client *c)
 void
 buttonpress(XEvent *e)
 {
-	unsigned int i, x, click;
+	unsigned int i, x, click, occ = 0;
 	Arg arg = {0};
 	Client *c;
 	Monitor *m;
@@ -431,9 +431,12 @@ buttonpress(XEvent *e)
 		focus(NULL);
 	}
 	if (ev->window == selmon->barwin) {
+		for (c = m->clients; c; c = c->next)
+			occ |= c->tags;
+
 		i = x = 0;
 		do
-			x += 32;
+			x += occ & 1 << i || m->tagset[m->seltags] & 1 << i ? 32 : 0;
 		while (ev->x >= x && ++i < LENGTH(tags));
 		if (i < LENGTH(tags)) {
 			click = ClkTagBar;
@@ -719,14 +722,13 @@ drawbar(Monitor *m)
 	drw_rect(drw, 0, 30, m->ww, 2, 1, 0);
 
 	x = 0;
+	w = 32;
 	for (i = 0; i < LENGTH(tags); i++) {
-		w = 32;
+		if (!(occ & 1 << i || m->tagset[m->seltags] & 1 << i))
+			continue;
+
 		drw_setscheme(drw, scheme[m->tagset[m->seltags] & 1 << i ? SchemeSel : SchemeNorm]);
 		drw_text(drw, x, 2, w, 28, (w - drw_fontset_getwidth(drw, tags[i])) / 2, tags[i], urg & 1 << i);
-		if (occ & 1 << i) {
-			drw_setscheme(drw, scheme[SchemeSel]);
-			drw_rect(drw, x, 0, 32, 2, 1, urg & 1 << i);
-		}
 		if (m->tagset[m->seltags] & 1 << i) {
 			drw_setscheme(drw, scheme[SchemeSel]);
 			drw_rect(drw, x, 30, 32, 2, 1, urg & 1 << i);
