@@ -1,5 +1,12 @@
 /* See LICENSE file for copyright and license details. */
 
+#define XF86AudioPrev           0x1008ff16
+#define XF86AudioPlay           0x1008ff14
+#define XF86AudioNext           0x1008ff17
+#define XF86AudioMute           0x1008ff12
+#define XF86AudioLowerVolume    0x1008ff11
+#define XF86AudioRaiseVolume    0x1008ff13
+
 /* appearance */
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int gappx     = 32;        /* gaps between windows */
@@ -63,6 +70,13 @@ static const char *slockcmd[]  = { "slock", NULL };
 static const char *firefoxcmd[]  = { "firefox", NULL };
 static const char *powercmd[] = { "power.sh", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_gray1, "-sf", col_blue, "-h", "32", NULL };
 
+static const char *prevcmd[] = { "playerctl", "previous", NULL };
+static const char *nextcmd[] = { "playerctl", "next", NULL };
+static const char *playcmd[] = { "playerctl", "play-pause", NULL };
+static const char *mutecmd[] = { "amixer", "set", "Master", "toggle", NULL };
+static const char *lowercmd[] = { "amixer", "set", "Master", "5%-", NULL };
+static const char *raisecmd[] = { "amixer", "set", "Master", "5%+", NULL };
+
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
@@ -101,6 +115,14 @@ static Key keys[] = {
 	{ MODKEY,                       XK_z,      spawn,          {.v = slockcmd } },
 	{ MODKEY,                       XK_x,      spawn,          {.v = firefoxcmd } },
 	{ MODKEY,                       XK_q,      spawn,          {.v = powercmd } },
+	{ 0,			XF86AudioPrev,		spawn,	   {.v = prevcmd } },
+	{ 0,			XF86AudioNext,		spawn,	   {.v = nextcmd } },
+	{ 0,			XF86AudioPlay,		spawn,	   {.v = playcmd } },
+	{ 0,			XF86AudioMute,		spawn,	   {.v = mutecmd } },
+	{ 0,			XF86AudioPrev,		spawn,	   {.v = prevcmd } },
+	{ 0,			XF86AudioNext,		spawn,	   {.v = nextcmd } },
+	{ 0,			XF86AudioLowerVolume,	spawn,	   {.v = lowercmd } },
+	{ 0,			XF86AudioRaiseVolume,	spawn,	   {.v = raisecmd } },
 };
 
 /* button definitions */
