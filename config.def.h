@@ -47,6 +47,7 @@ static const Rule rules[] = {
 	{ "discord",  NULL,       NULL,       0,            1,           -1 },
 	{ "Steam",    NULL,       NULL,       0,            1,           -1 },
 	{ "multimc",  NULL,       NULL,       0,            1,           -1 },
+	{ "MultiMC5", NULL,       NULL,       0,            1,           -1 },
 };
 
 /* layout(s) */
