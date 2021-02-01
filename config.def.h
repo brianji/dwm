@@ -46,6 +46,7 @@ static const Rule rules[] = {
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "discord",  NULL,       NULL,       0,            1,           -1 },
 	{ "Steam",    NULL,       NULL,       0,            1,           -1 },
+	{ "multimc",  NULL,       NULL,       0,            1,           -1 },
 };
 
 /* layout(s) */
