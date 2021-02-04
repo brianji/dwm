@@ -78,7 +78,7 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_gray1, "-sf", col_blue, "-h", "32", NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *slockcmd[]  = { "slock", NULL };
-static const char *firefoxcmd[]  = { "firefox", NULL };
+static const char *firefoxcmd[]  = { "firefox-bin", NULL };
 static const char *powercmd[] = { "power.sh", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_gray1, "-sf", col_blue, "-h", "32", NULL };
 
 static const char *prevcmd[] = { "playerctl", "previous", NULL };
